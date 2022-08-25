@@ -1,0 +1,39 @@
+.userCard-container{
+    display: flex;
+    width: auto;
+    border: 2px solid grey;
+    margin: 20px;
+
+}
+
+.image-container{
+    display: flex;
+    align-items:flex-start;
+    margin-top: 10px;
+    img{
+        border-radius: 23px;
+        height: 50px;
+        width: 50px;
+    }
+}
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+
+    .userName{
+        margin: 10px 30px 0px 30px;
+        font-size: 30px;
+    }
+    .follower-container{
+        display: flex;
+        gap: 80px;
+        button {
+            height: 30px;
+            width: 100px;
+            border-radius: 5px;
+            margin-top: 30px;
+
+        }
+    }
+}
