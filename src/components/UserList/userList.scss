@@ -1,6 +1,11 @@
 .userList-container{
     display: flex;
     flex-direction: column;    
-    min-width: 300px;
+    min-width: 50%;
 
+}
+.pagination-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

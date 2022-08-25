@@ -1,7 +1,14 @@
 import React from "react";
 import './repo.scss'
 
-const Repo = ({repo}) => {
+interface RepoProps {
+    key:number
+    repo:{name: string,
+    language: string
+    }
+}
+
+const Repo = ({repo} : RepoProps) => {
 
     return(
         <div className="repo-container">

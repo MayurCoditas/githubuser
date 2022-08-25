@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {useEffect} from 'react';
 import Navbar from "../components/Navbar/Navbar";
 import UserList from "../components/UserList/UserList";
+import sortUsers from '../utils/sorting';
 import React from 'react';
 import './homepage.scss'
 
@@ -9,11 +10,7 @@ const Homepage = () => {
 
     interface userType  {
         login:string,
-        id:number,
-        node_id:string,
-        avatar_url:string,
-        gravatar_id:string,
-
+        id:number
 
     }
     const [userList , setUserList] = useState <userType[] | null>(null);
@@ -25,23 +22,29 @@ const Homepage = () => {
    
         fetch(`https://api.github.com/search/users?q=${searchString}`)
         .then(res => res.json())
-        .then(res => {setUserList(res.items)
+        .then(res => {
+            if(res.message==="Validation Failed")
+            {
+                setUserList([])
+            }
+            else{
+                setUserList(res.items)
+            }
+            
         })
-        .catch(err => {
-            console.log(err)
-            setUserList([])} );
+    //     .catch(err => {
+    //         console.log(err)
+    //         setUserList([])} );
         
       } ,[searchString]);
 
       useEffect(()=>{
         if(userList)
-        {var sortedUserList : userType[] 
-        sortedUserList = sortUsers(sortValue , userList)
+        { 
+        var sortedUserList : userType[] = sortUsers(sortValue , userList)
         
         console.log(sortedUserList)
         setUserList([...sortedUserList])}
-        
-   
 
       } ,[sortValue]);
 
@@ -52,29 +55,6 @@ const Homepage = () => {
         <UserList userList={userList} />
         </div>
     )
-}
-
-const sortUsers = (sortType ,userList) => {
-    switch(sortType)
-    {
-        case 'A-Z':
-            return userList.sort((a:any,b:any)=> {
-                const nameA:string = a.login.toLowerCase()
-                const nameB:string = b.login.toLowerCase()
-                return (nameB<nameA)?1:(nameB>nameA)?-1:0});
-            break;
-        case 'Z-A':
-            return userList.sort((a,b)=> {
-                const nameA:string = a.login.toLowerCase()
-                const nameB:string = b.login.toLowerCase()
-                return (nameB<nameA)?-1:(nameB>nameA)?1:0});
-            break;
-        case 'Rank-Ascending':
-            break;
-        case 'Rank-Descending':
-            break;
-    }
-
 }
 
 export default Homepage;

@@ -1,7 +1,12 @@
 import React from 'react';
 import './navbar.scss';
 
-const Navbar = ({setSearchString , setSortValue}) => {
+type Props = {
+    setSearchString : Function,
+    setSortValue: Function
+}
+
+const Navbar = ({setSearchString , setSortValue} : Props) => {
 
     const handleSelectChange = (e : React.ChangeEvent ) => {
         const target = e.target as HTMLSelectElement;
@@ -15,11 +20,11 @@ const Navbar = ({setSearchString , setSortValue}) => {
         setSearchString(target.value)
     }
 
-    const debounceSearch = (func , delay) => {
-        let timer
+    const debounceSearch = (func : Function , delay : number) => {
+        let timer : number | undefined | ReturnType<typeof setTimeout>
 
         return function(){
-            const context=this
+            const context =this
             const args = arguments
             clearTimeout(timer)
             timer = setTimeout(()=>func.apply(context,args) , 1000)
@@ -32,8 +37,8 @@ const Navbar = ({setSearchString , setSortValue}) => {
             <select className='nav-filter' id="sort" onChange={handleSelectChange}>
              <option value="A-Z">Name A-Z</option>
              <option value="Z-A">Name Z-A</option>
-             <option value="Rank-Ascending">Rank &uarr;</option>
-             <option value="Rank-Descending">Rank &darr;</option>
+             {/* <option value="Rank-Ascending">Rank &uarr;</option>
+             <option value="Rank-Descending">Rank &darr;</option> */}
             </select>
             </div>
             <div  >
