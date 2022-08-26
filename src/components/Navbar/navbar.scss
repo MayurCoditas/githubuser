@@ -7,19 +7,31 @@
     gap: 20px;
     width: 100%;
     background-color: rgb(43, 123, 243);
-
-}
-.nav-filter{
-    border-radius: 5px;
-    padding: 5px;
-    width: 200px;
-    outline: none;
-}
-.nav-search{
-    border-radius: 5px;
-    padding: 5px;
-    width: 200px;
-    border: none;
-    outline: none;
+    .nav-filter{
+        font-family: 'Lato';
+        border-radius: 5px;
+        padding: 5px;
+        height: 36px;
+        width: 200px;
+        outline: none;
+        background-color: white;
+    }
+    .nav-search{
+        border-top-left-radius: 5px ;
+        border-bottom-left-radius : 5px ;
+        padding: 5px;
+        width: 200px;
+        border: none;
+        outline: none;
+    
+    }
+    .search-button{
+        border: none;
+        background-color: rgb(255, 255, 255);
+        float: right;
+        height: 34px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
 
 }
