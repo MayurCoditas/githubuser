@@ -1,6 +1,4 @@
-export  interface RepoProps {
-    key:number
-    repo:{name: string,
-    language: string
-    }
+export interface RepoProps {
+  key: number;
+  repo: { name: string; language: string };
 }

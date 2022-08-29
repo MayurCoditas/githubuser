@@ -1,4 +1,4 @@
 export type NavPropTypes = {
-    setSearchString : Function,
-    setSortValue: Function
-}
+  setSearchString: Function;
+  setSortValue: Function;
+};

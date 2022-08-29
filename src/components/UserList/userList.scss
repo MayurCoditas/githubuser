@@ -1,15 +1,13 @@
-.userList-container{
-    display: flex;
-    flex-direction: column;    
-    min-width: 50%;
-
-
+.userList-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 50%;
 }
-.pagination-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.total-result-heading{
-    margin-bottom: 0px;
+.total-result-heading {
+  margin-bottom: 0px;
 }

@@ -5,12 +5,10 @@ import UserList from "../../components/UserList/UserList";
 import React from "react";
 import "./Homepage.scss";
 
-const Homepage : React.FC = () => {
- 
+const Homepage: React.FC = () => {
   const [sortValue, setSortValue] = useState<string>("A-Z");
   const [searchString, setSearchString] = useState<string>("");
 
- 
   return (
     <div className="home-container">
       <Navbar setSearchString={setSearchString} setSortValue={setSortValue} />

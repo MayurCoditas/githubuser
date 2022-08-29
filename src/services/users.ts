@@ -20,12 +20,15 @@ export const searchUsers: Function = async (
   }
 };
 
-export const getUserInfo : Function = async (loginName:string , setUserData:Function) => {
-    try {
-       let res = await axios.get(`https://api.github.com/users/${loginName}`)
-       setUserData(res.data)
-    } catch (error) {
-        console.log(error);
-        setUserData(null)
-    }
-}
+export const getUserInfo: Function = async (
+  loginName: string,
+  setUserData: Function
+) => {
+  try {
+    let res = await axios.get(`https://api.github.com/users/${loginName}`);
+    setUserData(res.data);
+  } catch (error) {
+    console.log(error);
+    setUserData(null);
+  }
+};

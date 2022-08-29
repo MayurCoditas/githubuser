@@ -1,5 +1,5 @@
 export interface FooterPropTypes {
-  currentPage:number,
-  setCurrentPage:Function,
-  pageCount:number
+  currentPage: number;
+  setCurrentPage: Function;
+  pageCount: number;
 }
