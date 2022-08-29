@@ -8,7 +8,7 @@ const Navbar: React.FC<NavPropTypes> = ({ setSearchString, setSortValue }) => {
   const [searchStr, setSearchStr] = useState<string>("");
 
   const handleSearchClick: React.MouseEventHandler = (e: React.MouseEvent) => {
-    let newStr: string = searchStr.concat("");
+    let newStr: String = new String(searchStr)
     setSearchString(newStr);
   };
   const handleChange: React.ChangeEventHandler = (e: React.ChangeEvent) => {

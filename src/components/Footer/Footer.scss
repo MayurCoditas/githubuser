@@ -1,11 +1,20 @@
 .pagination-container {
   background-color: white;
+  display: flex;
+  align-items: right;
+  justify-content: right;
 }
 .page-button {
   border: none;
   font-family: "Lato";
+  background-color: white;
+  font-family: "lato";
 }
 .current-page-button {
   border: none;
   color: rgb(40, 138, 218);
+  background-color: white;
+  font-family: "lato";
+
+
 }
