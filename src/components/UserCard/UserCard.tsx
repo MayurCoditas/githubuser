@@ -1,55 +1,32 @@
-import "./userCard.scss";
+import "./UserCard.scss";
 import React, { Fragment, useState } from "react";
 import Repo from "../Repo/Repo";
 import { useEffect } from "react";
 import Spinner from "../Spinner/Spinner";
 import Button from "../Button/Button";
+import { UserPropType , UserDataType , RepoType } from "./Usercard.types";
+import { getUserInfo } from "../../services/users";
+import { getRepoInfo } from "../../services/repo";
 
-interface UserPropType {
-  user: {
-    login: string;
-    avatar_url: string;
-    html_url: string;
-    repos_url: string;
-  };
-}
 
-interface UserDataType {
-  followers: number;
-  following: number;
-}
+const UserCard :React.FC<UserPropType>= ({ user }) => {
 
-interface repoType {
-  name: string;
-  language: string;
-}
-
-const UserCard = ({ user }: UserPropType) => {
   const [userData, setUserData] = useState<UserDataType | null>(null);
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${user.login}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUserData(data);
-      });
-  }, [user.login]);
-
-  const [repos, setRepos] = useState<repoType[] | null>(null);
+  const [repos, setRepos] = useState<RepoType[] | null>(null);
   const [flag, setFlag] = useState<boolean>(false);
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!flag) {
-      console.log(user.repos_url);
-      fetch(`${user.repos_url}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (Array.isArray(data)) setRepos(data);
-        });
-    }
+  useEffect(() => {
 
+    getUserInfo(user.login , setUserData)
+    
+  }, [user.login]);
+
+  
+
+  const handleClick : React.MouseEventHandler = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!flag)
+    getRepoInfo(user.repos_url , setRepos)
     setFlag(!flag);
   };
 
@@ -82,22 +59,24 @@ const UserCard = ({ user }: UserPropType) => {
                 <Spinner />
               )}
             </div>
-          ) : null}
+          ) : null
+          }
         </div>
         <div className="button-container">
-          {flag ? (
-            <Button handleClick={handleClick} buttonType="">
-              Collapse
-            </Button>
-          ) : (
-            <Button handleClick={handleClick} buttonType="">
-              Details
-            </Button>
-          )}
-        </div>
+    {flag ? (
+      <Button handleClick={handleClick} buttonType="">
+        Collapse
+      </Button>
+    ) : (
+      <Button handleClick={handleClick} buttonType="">
+        Details
+      </Button>
+    )}
+  </div>
       </div>
     </Fragment>
   );
 };
+
 
 export default UserCard;

@@ -3,9 +3,13 @@
     flex-direction: column;    
     min-width: 50%;
 
+
 }
 .pagination-container{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.total-result-heading{
+    margin-bottom: 0px;
 }

@@ -1,7 +1,7 @@
-import "./spinner.scss"
+import "./Spinner.scss"
 import React from "react";
 
-const Spinner = () => {
+const Spinner : React.FC = () => {
 
     return(<div className="SpinnerOverlay">
     <div className="SpinnerContainer"></div>

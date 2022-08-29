@@ -1,54 +1,52 @@
 import React from 'react';
 import UserCard from "../UserCard/UserCard";
 import { useEffect , useState } from 'react';
-import './userList.scss'
+import './UserList.scss'
 import Footer from '../Footer/Footer';
+import sortUsers from "../../utils/sorting";
+import Spinner from '../Spinner/Spinner';
+import { UserListPropType , userType} from './UserList.types';
+import { searchUsers } from '../../services/users';
+import { itemsPerPage } from './UserList.constants';
 
-interface PropType {
-  userList:userType[] | null
-}
-
-interface userType  {
-  login:string,
-  id:number,
-  avatar_url:string,
-  html_url:string,
-  repos_url:string
-
-}
-
-const itemsPerPage : number =5
-
-const UserList = ({userList} : PropType) => {
+const UserList :React.FC<UserListPropType> = ({sortValue,searchString}) => {
 
   
 
   const [currentItems, setCurrentItems] = useState<userType[] | null>(null);
   const [pageCount, setPageCount] = useState<number>(0);
-  const [itemOffset, setItemOffset] = useState<number>(0);
-  
+  const [userList, setUserList] = useState<userType[] | null>(null);
+  const [currentPage ,setCurrentPage] = useState<number>(1);
 
-  
-
+  useEffect(()=>{
+    setCurrentPage(1)
+    setUserList(null)
+    setPageCount(0)
+    setCurrentItems(null)
+  },[searchString])
 
   useEffect(() => {
-    // Fetch items from another resources.
-    if(userList)
-    {const endOffset : number = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(userList.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(userList.length / itemsPerPage));}
-  }, [itemOffset , userList]);
+
+    searchUsers(searchString,currentPage,itemsPerPage,setUserList , setPageCount)
+
+  }, [searchString , currentPage]);
+
+  useEffect(() => {
+    if (userList) {
+      var sortedUserList: userType[] = sortUsers(sortValue, userList);
+      setCurrentItems([...sortedUserList]);
+    }
+  }, [userList ,sortValue]);
 
   
- 
 
     return(
         <div className='userList-container'>
-          <p>Total Results : {userList?userList.length:'0'}</p>
+          {userList? <div><p className='total-result-heading'>Total Results : {pageCount?pageCount:'0'}</p>
           {currentItems?.map((user,index)=> <UserCard key={user.id} user={user} />)}
 
-        <Footer pageCount={pageCount} userList={userList} setItemOffset={setItemOffset} itemsPerPage={itemsPerPage}  />
+        <Footer currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} />
+          </div> :<Spinner />}
           
 
         </div>

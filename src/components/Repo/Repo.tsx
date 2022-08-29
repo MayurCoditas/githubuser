@@ -1,14 +1,10 @@
 import React from "react";
-import './repo.scss'
+import './Repo.scss';
+import {RepoProps} from './Repo.types'
 
-interface RepoProps {
-    key:number
-    repo:{name: string,
-    language: string
-    }
-}
 
-const Repo = ({repo} : RepoProps) => {
+
+const Repo : React.FC<RepoProps> = ({repo}) => {
 
     return(
         <div className="repo-container">

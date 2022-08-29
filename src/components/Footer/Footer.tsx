@@ -1,72 +1,67 @@
 import React from "react";
-import ReactPaginate from "react-paginate";
+import { useEffect } from "react";
+import { useState } from "react";
+import './Footer.scss';
+import { FooterPropTypes } from "./Footer.types";
+import { calculatePagenumbers } from "./Footer.utils";
 
-interface userType {
-  login: string;
-  id: number;
-  avatar_url: string;
-  html_url: string;
-  repos_url: string;
-}
 
-interface FooterPropTypes {
-  pageCount: number;
-  userList: userType[] | null;
-  setItemOffset: Function;
-  itemsPerPage: number;
-}
 
-const Footer = ({
-  pageCount,
-  userList,
-  setItemOffset,
-  itemsPerPage,
-}: FooterPropTypes) => {
+
+const Footer : React.FC<FooterPropTypes> = ({currentPage , setCurrentPage ,pageCount}) => {
+
+  const[ pageNumbers , setPageNumbers] = useState<number[]>([])
+
+  const handleClick : React.MouseEventHandler = (e : React.MouseEvent) => {
+    e.preventDefault()
+    const target = e.target as HTMLButtonElement;
+
+    if(target.innerHTML==='&gt;')
+    {
+      setCurrentPage(currentPage+1)
+  
+    }
+    else if(target.innerHTML==='&lt;')
+    {
+      setCurrentPage(currentPage-1)
+    }
+    else if(target.innerHTML==='...')
+    {
+      setCurrentPage(currentPage-2)
+    }
+    else if(target.innerHTML==='....')
+    {
+      setCurrentPage(currentPage+2)
+    }
+    else {
+
+      setCurrentPage(Number(target.innerHTML))
+    }
+    
+    }
+
+    useEffect(()=>{
+      let pages = calculatePagenumbers(currentPage,pageCount)
+      
+      setPageNumbers(pages)
+    },[currentPage , pageCount])
+  
   return (
     <div>
-      <div className="pagination-container">
+      {pageCount? <div className="pagination-container">
+        <button className="page-button" disabled={currentPage===1?true:false} onClick={handleClick}>&lt;</button>
         {
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="next >"
-            onPageChange={(e: { selected: number }) =>
-              handlePageClick(e, userList, setItemOffset, itemsPerPage)
-            }
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            previousLabel="< previous"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            containerClassName="pagination"
-            activeClassName="active"
-            renderOnZeroPageCount={() => null}
-          />
+          pageNumbers.map((page,index)=><button key={index} className={page===currentPage?"current-page-button":"page-button"} onClick={handleClick} >{page}</button>)
         }
-      </div>
+       
+        
+        <button className="page-button" disabled={currentPage===pageCount?true:false} onClick={handleClick} >&gt;</button>
+      </div> :null}
+      
     </div>
   );
 };
 
-const handlePageClick: Function = (
-  e: { selected: number },
-  userList: userType[] | null,
-  setItemOffset: Function,
-  itemsPerPage: number
-) => {
-  console.log(e);
-  if (userList) {
-    const newOffset: number = (e.selected * itemsPerPage) % userList.length;
-    console.log(
-      `User requested page number ${e.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
-  }
-};
+
 
 export default Footer;
