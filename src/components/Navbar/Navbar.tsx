@@ -15,6 +15,10 @@ const Navbar: React.FC<NavPropTypes> = ({ setSearchString, setSortValue }) => {
     const target = e.target as HTMLSelectElement;
     setSortValue(target.value);
   };
+  const handleSearchChange: React.ChangeEventHandler = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLSelectElement;
+    setSearchStr(target.value);
+  };
 
   return (
     <div className="nav-container">
@@ -33,7 +37,7 @@ const Navbar: React.FC<NavPropTypes> = ({ setSearchString, setSortValue }) => {
           className="nav-search"
           type="text"
           placeholder="Enter username"
-          onChange={(e) => handleChange(e, setSearchStr)}
+          onChange={(e) => handleSearchChange(e)}
         />
         <Button buttonType="search-button" handleClick={handleSearchClick}>
           <i className="fa fa-search"></i>
