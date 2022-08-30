@@ -1,39 +1,45 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import "./Footer.scss";
-import { FooterPropTypes } from "./Footer.types";
+import { IFooterProps } from "./Footer.types";
 import { calculatePagenumbers } from "./Footer.utils";
 
-const Footer: React.FC<FooterPropTypes> = ({
+const Footer: React.FC<IFooterProps> = ({
   currentPage,
-  setCurrentPage,
+  handleCurrentPage,
   pageCount,
 }) => {
-  const [pageNumbers, setPageNumbers] = useState<number[]>([]);
+  const [pageNumbers, setPageNumbers] = useState<Array<number | string>>([
+    1,
+    2,
+    3,
+    "....",
+    pageCount,
+  ]);
 
-  const handleClick: React.MouseEventHandler = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLButtonElement;
-
-    if (target.innerHTML === "&gt;") {
-      setCurrentPage(currentPage + 1);
-    } else if (target.innerHTML === "&lt;") {
-      setCurrentPage(currentPage - 1);
-    } else if (target.innerHTML === "...") {
-      setCurrentPage(currentPage - 2);
-    } else if (target.innerHTML === "....") {
-      setCurrentPage(currentPage + 2);
-    } else {
-      setCurrentPage(Number(target.innerHTML));
+  const handleClick: React.MouseEventHandler = (event: React.MouseEvent) => {
+    event.preventDefault();
+    const target = event.target as HTMLButtonElement;
+    let newCurrentPage: number = 1;
+    switch (target.dataset.value) {
+      case ">":
+        newCurrentPage = currentPage + 1;
+        break;
+      case "<":
+        newCurrentPage = currentPage - 1;
+        break;
+      case "...":
+        newCurrentPage = currentPage - 2;
+        break;
+      case "....":
+        newCurrentPage = currentPage + 2;
+        break;
+      default:
+        newCurrentPage = Number(target.dataset.value);
     }
+    handleCurrentPage(newCurrentPage);
+    setPageNumbers(calculatePagenumbers({ newCurrentPage, pageCount }));
   };
-
-  useEffect(() => {
-    let pages = calculatePagenumbers(currentPage, pageCount);
-
-    setPageNumbers(pages);
-  }, [currentPage, pageCount]);
 
   return (
     <div>
@@ -41,8 +47,9 @@ const Footer: React.FC<FooterPropTypes> = ({
         <div className="pagination-container">
           <button
             className="page-button"
-            disabled={currentPage === 1 ? true : false}
+            disabled={currentPage === 1}
             onClick={handleClick}
+            data-value={""}
           >
             &lt;
           </button>
@@ -53,6 +60,7 @@ const Footer: React.FC<FooterPropTypes> = ({
                 page === currentPage ? "current-page-button" : "page-button"
               }
               onClick={handleClick}
+              data-value={page}
             >
               {page}
             </button>
@@ -60,8 +68,9 @@ const Footer: React.FC<FooterPropTypes> = ({
 
           <button
             className="page-button"
-            disabled={currentPage === pageCount ? true : false}
+            disabled={currentPage === pageCount}
             onClick={handleClick}
+            data-value={">"}
           >
             &gt;
           </button>

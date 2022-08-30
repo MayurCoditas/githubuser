@@ -1,8 +1,3 @@
-export interface IUserListProps {
-  sortValue: string;
-  searchString: string;
-}
-
 export interface IUserType {
   login: string;
   id: number;

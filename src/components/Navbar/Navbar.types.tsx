@@ -1,4 +1,4 @@
-export type NavPropTypes = {
-  setSearchString: Function;
-  setSortValue: Function;
-};
+export interface INavProps {
+  handleSearchString: (searchStr: string) => void;
+  handleSortValue: (sortValue: string) => void;
+}

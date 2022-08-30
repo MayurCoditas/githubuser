@@ -1,34 +1,35 @@
 import axios from "axios";
+import { IUserType } from "./users.types";
 
-export const searchUsers: Function = async (
+export const searchUsers = async (
   searchString: string,
   currentPage: number,
   itemsPerPage: number,
-  setUserList: Function,
-  setPagecount: Function
+  handleUserList: (userList: IUserType[]) => void,
+  handlePageCount: (count: number) => void
 ) => {
   try {
     let res = await axios.get(
       `https://api.github.com/search/users?q=${searchString}&page=${currentPage}&per_page=${itemsPerPage}`
     );
-    setUserList(res.data.items);
-    setPagecount(Math.ceil(res.data.total_count / itemsPerPage));
+    handleUserList(res.data.items);
+    handlePageCount(res.data.total_count);
   } catch (error) {
     console.log(error);
-    setUserList([]);
-    setPagecount(0);
+    handleUserList([]);
+    handlePageCount(0);
   }
 };
 
-export const getUserInfo: Function = async (
+export const getUserInfo = async (
   loginName: string,
-  setUserData: Function
+  handleUserData: Function
 ) => {
   try {
     let res = await axios.get(`https://api.github.com/users/${loginName}`);
-    setUserData(res.data);
+    handleUserData(res.data);
   } catch (error) {
     console.log(error);
-    setUserData(null);
+    handleUserData(null);
   }
 };

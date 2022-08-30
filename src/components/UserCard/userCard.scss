@@ -30,8 +30,11 @@
   .follower-container {
     display: flex;
     flex-direction: column;
-    //gap: 80px;
   }
+}
+
+.collapse-container {
+  max-width: 100%;
 }
 
 .collapse-headings {
@@ -55,4 +58,10 @@
     margin: 110px 30px 30px 40px;
     color: rgb(19, 122, 218);
   }
+}
+
+.no-repo-info {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }

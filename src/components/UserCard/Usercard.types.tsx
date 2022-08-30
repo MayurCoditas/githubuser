@@ -1,4 +1,4 @@
-export interface UserPropType {
+export interface IUserCardProps {
   user: {
     login: string;
     avatar_url: string;
@@ -7,12 +7,13 @@ export interface UserPropType {
   };
 }
 
-export interface UserDataType {
+export interface IUserDataType {
   followers: number;
   following: number;
 }
 
-export interface RepoType {
+export interface IRepoType {
   name: string;
   language: string;
+  id: number;
 }

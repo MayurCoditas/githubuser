@@ -1,6 +1,13 @@
 .repo-container {
   display: flex;
   width: 100%;
+
+  .repo-name {
+    text-overflow: ellipsis;
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
   .repo-language {
     margin-left: auto;
   }

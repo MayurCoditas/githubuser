@@ -1,14 +1,9 @@
 import React from "react";
+import { IButtonProps } from "./Button.types";
 
-interface ButtonPropType {
-  children: React.ReactNode;
-  buttonType: string;
-  handleClick: Function;
-}
-
-const Button = ({ children, buttonType, handleClick }: ButtonPropType) => {
+const Button = ({ children, buttonType, handleClick }: IButtonProps) => {
   return (
-    <button className={buttonType} onClick={(e) => handleClick(e)}>
+    <button className={buttonType} onClick={handleClick}>
       {children}
     </button>
   );

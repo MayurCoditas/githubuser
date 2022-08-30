@@ -2,32 +2,34 @@ import React from "react";
 import { useState } from "react";
 import Button from "../Button/Button";
 import "./Navbar.scss";
-import { NavPropTypes } from "./Navbar.types";
+import { INavProps } from "./Navbar.types";
 
-const Navbar: React.FC<NavPropTypes> = ({ setSearchString, setSortValue }) => {
+const Navbar: React.FC<INavProps> = ({
+  handleSearchString,
+  handleSortValue,
+}) => {
   const [searchStr, setSearchStr] = useState<string>("");
 
-  const handleSearchClick: React.MouseEventHandler = (e: React.MouseEvent) => {
-    let newStr: String = new String(searchStr)
-    setSearchString(newStr);
+  const handleSearchClick: React.MouseEventHandler = (
+    event: React.MouseEvent
+  ) => {
+    handleSearchString(searchStr);
   };
-  const handleChange: React.ChangeEventHandler = (e: React.ChangeEvent) => {
-    const target = e.target as HTMLSelectElement;
-    setSortValue(target.value);
+  const handleChange: React.ChangeEventHandler = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLSelectElement;
+    handleSortValue(target.value);
   };
-  const handleSearchChange: React.ChangeEventHandler = (e: React.ChangeEvent) => {
-    const target = e.target as HTMLSelectElement;
+  const handleSearchChange: React.ChangeEventHandler = (
+    event: React.ChangeEvent
+  ) => {
+    const target = event.target as HTMLSelectElement;
     setSearchStr(target.value);
   };
 
   return (
     <div className="nav-container">
       <div className="nav-filter-container">
-        <select
-          className="nav-filter"
-          id="sort"
-          onChange={(e) => handleChange(e)}
-        >
+        <select className="nav-filter" id="sort" onChange={handleChange}>
           <option value="A-Z">Name A-Z</option>
           <option value="Z-A">Name Z-A</option>
         </select>
@@ -37,7 +39,7 @@ const Navbar: React.FC<NavPropTypes> = ({ setSearchString, setSortValue }) => {
           className="nav-search"
           type="text"
           placeholder="Enter username"
-          onChange={(e) => handleSearchChange(e)}
+          onChange={handleSearchChange}
         />
         <Button buttonType="search-button" handleClick={handleSearchClick}>
           <i className="fa fa-search"></i>

@@ -1,19 +1,21 @@
-export const calculatePagenumbers: Function = (
-  currentPage: number,
-  pageCount: number
-) => {
+import { ICalculatePageNumbersArgs } from "./Footer.types";
+
+export const calculatePagenumbers: Function = ({
+  newCurrentPage,
+  pageCount,
+}: ICalculatePageNumbersArgs) => {
   let pages = [];
-  if (currentPage <= 2) {
+  if (newCurrentPage <= 2) {
     pages = [1, 2, 3, "....", pageCount];
-  } else if (currentPage >= pageCount - 2) {
+  } else if (newCurrentPage >= pageCount - 2) {
     pages = [1, "...", pageCount - 2, pageCount - 1, pageCount];
   } else {
     pages = [
       1,
       "...",
-      currentPage - 1,
-      currentPage,
-      currentPage + 1,
+      newCurrentPage - 1,
+      newCurrentPage,
+      newCurrentPage + 1,
       "....",
       pageCount,
     ];

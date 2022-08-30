@@ -1,19 +1,16 @@
 import axios from "axios";
-import { RepoType } from "../components/UserCard/Usercard.types";
+import { IRepoType } from "./repo.types";
 
 interface ResType {
-  data: RepoType | null;
+  data: IRepoType | null;
 }
 
-export const getRepoInfo: Function = async (
-  url: string,
-  setRepos: Function
-) => {
+export const getRepoInfo = async (url: string, handleRepos: Function) => {
   try {
     let res: ResType = await axios.get(url);
-    setRepos(res.data);
+    handleRepos(res.data);
   } catch (error) {
     console.log(error);
-    setRepos([]);
+    handleRepos([]);
   }
 };

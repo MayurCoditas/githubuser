@@ -1,12 +1,14 @@
 import React from "react";
 import "./Repo.scss";
-import { RepoProps } from "./Repo.types";
+import { IRepoProps } from "./Repo.types";
 
-const Repo: React.FC<RepoProps> = ({ repo }) => {
+const Repo: React.FC<IRepoProps> = ({ repo }) => {
   return (
     <div className="repo-container">
-      <p>{repo.name} </p>
-      <p className="repo-language">{repo.language}</p>
+      <p className="repo-name">{repo.name} </p>
+      <p className="repo-language">
+        {repo.language ? repo.language : "Not Specified"}
+      </p>
     </div>
   );
 };

@@ -4,23 +4,33 @@ import Repo from "../Repo/Repo";
 import { useEffect } from "react";
 import Spinner from "../Spinner/Spinner";
 import Button from "../Button/Button";
-import { UserPropType, UserDataType, RepoType } from "./Usercard.types";
+import { IUserCardProps, IUserDataType, IRepoType } from "./Usercard.types";
 import { getUserInfo } from "../../services/users";
 import { getRepoInfo } from "../../services/repo";
 
-const UserCard: React.FC<UserPropType> = ({ user }) => {
-  const [userData, setUserData] = useState<UserDataType | null>(null);
-  const [repos, setRepos] = useState<RepoType[] | null>(null);
+const UserCard: React.FC<IUserCardProps> = ({ user }) => {
+  const [userData, setUserData] = useState<IUserDataType | null>(null);
+  const [repos, setRepos] = useState<IRepoType[] | null>(null);
   const [flag, setFlag] = useState<boolean>(false);
 
   useEffect(() => {
-    getUserInfo(user.login, setUserData);
+    getUserInfo(user.login, handleUserData);
   }, [user.login]);
 
-  const handleClick: React.MouseEventHandler = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!flag) getRepoInfo(user.repos_url, setRepos);
+  const handleClick: React.MouseEventHandler = async (
+    event: React.MouseEvent
+  ) => {
+    event.preventDefault();
+    if (!flag) getRepoInfo(user.repos_url, handleRepos);
     setFlag(!flag);
+  };
+
+  const handleUserData = (user: IUserDataType) => {
+    setUserData(user);
+  };
+
+  const handleRepos = (repo: IRepoType[]) => {
+    setRepos(repo);
   };
 
   return (
@@ -41,13 +51,19 @@ const UserCard: React.FC<UserPropType> = ({ user }) => {
           ) : null}
 
           {flag ? (
-            <div>
+            <div className="collapse-container">
               <div className="collapse-headings">
                 <p className="repo-heading">Repository</p>
                 <p className="language-heading">Language</p>
               </div>
               {repos ? (
-                repos.map((repo, index) => <Repo key={index} repo={repo} />)
+                repos.length === 0 ? (
+                  <div className="no-repo-info">
+                    <p>No Repos Present</p>
+                  </div>
+                ) : (
+                  repos.map((repo, index) => <Repo key={repo.id} repo={repo} />)
+                )
               ) : (
                 <Spinner />
               )}
@@ -55,15 +71,9 @@ const UserCard: React.FC<UserPropType> = ({ user }) => {
           ) : null}
         </div>
         <div className="button-container">
-          {flag ? (
-            <Button handleClick={handleClick} buttonType="">
-              Collapse
-            </Button>
-          ) : (
-            <Button handleClick={handleClick} buttonType="">
-              Details
-            </Button>
-          )}
+          <Button handleClick={handleClick} buttonType="">
+            {flag ? "Collapse" : "Details"}
+          </Button>
         </div>
       </div>
     </Fragment>
