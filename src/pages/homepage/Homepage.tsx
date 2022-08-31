@@ -6,7 +6,7 @@ import "./Homepage.scss";
 
 const Homepage: React.FC = () => {
   const [sortValue, setSortValue] = useState<string>("A-Z");
-  const [searchString, setSearchString] = useState<string>("");
+  const [searchString, setSearchString] = useState<string>('');
 
   const handleSearchString = (searchStr: string) => {
     setSearchString(searchStr);

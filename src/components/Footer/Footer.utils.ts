@@ -1,9 +1,9 @@
 import { ICalculatePageNumbersArgs } from "./Footer.types";
 
-export const calculatePagenumbers: Function = ({
+export const calculatePagenumbers = ({
   newCurrentPage,
   pageCount,
-}: ICalculatePageNumbersArgs) => {
+}: ICalculatePageNumbersArgs): Array<number | string> => {
   let pages = [];
   if (newCurrentPage <= 2) {
     pages = [1, 2, 3, "....", pageCount];

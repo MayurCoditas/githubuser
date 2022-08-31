@@ -5,7 +5,10 @@ interface ResType {
   data: IRepoType | null;
 }
 
-export const getRepoInfo = async (url: string, handleRepos: Function) => {
+export const getRepoInfo = async (
+  url: string,
+  handleRepos: Function
+): Promise<void> => {
   try {
     let res: ResType = await axios.get(url);
     handleRepos(res.data);

@@ -7,7 +7,7 @@ export const searchUsers = async (
   itemsPerPage: number,
   handleUserList: (userList: IUserType[]) => void,
   handlePageCount: (count: number) => void
-) => {
+): Promise<void> => {
   try {
     let res = await axios.get(
       `https://api.github.com/search/users?q=${searchString}&page=${currentPage}&per_page=${itemsPerPage}`
@@ -24,7 +24,7 @@ export const searchUsers = async (
 export const getUserInfo = async (
   loginName: string,
   handleUserData: Function
-) => {
+): Promise<void> => {
   try {
     let res = await axios.get(`https://api.github.com/users/${loginName}`);
     handleUserData(res.data);

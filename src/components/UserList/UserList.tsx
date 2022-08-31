@@ -1,6 +1,6 @@
 import React from "react";
 import UserCard from "../UserCard/UserCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./UserList.scss";
 import Footer from "../Footer/Footer";
 import sortUsers from "../../utils/sorting";
@@ -14,29 +14,37 @@ const UserList: React.FC<IUserListProps> = ({ sortValue, searchString }) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [userList, setUserList] = useState<IUserType[] | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const isFirstRender = useRef(false);
 
   useEffect(() => {
-    setCurrentPage(1);
-    setUserList(null);
-    setTotalCount(0);
-    setCurrentItems(null);
+    if (isFirstRender.current) {
+      setCurrentPage(1);
+      setUserList(null);
+      setTotalCount(0);
+      setCurrentItems(null);
+    }
   }, [searchString]);
 
   useEffect(() => {
-    searchUsers(
-      searchString,
-      currentPage,
-      itemsPerPage,
-      handleUserList,
-      handlePageCount
-    );
+    if (isFirstRender.current) {
+      searchUsers(
+        searchString,
+        currentPage,
+        itemsPerPage,
+        handleUserList,
+        handlePageCount
+      );
+    }
   }, [searchString, currentPage]);
 
   useEffect(() => {
-    if (userList) {
-      var sortedUserList: IUserType[] = sortUsers(sortValue, userList);
-      setCurrentItems([...sortedUserList]);
+    if (isFirstRender.current) {
+      if (userList) {
+        var sortedUserList: IUserType[] = sortUsers(sortValue, userList);
+        setCurrentItems([...sortedUserList]);
+      }
     }
+    isFirstRender.current = true;
   }, [userList, sortValue]);
 
   const handleCurrentPage = (page: number) => {
