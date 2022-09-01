@@ -1,6 +1,6 @@
 import React from "react";
-import { IButtonProps } from "./Button.types";
-import "./Button.scss";
+import { IButtonProps } from "components/Button/interfaces";
+import "components/Button/Button.scss";
 
 const Button = ({ children, buttonType, handleClick }: IButtonProps) => {
   return (

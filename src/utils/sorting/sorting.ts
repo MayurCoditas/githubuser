@@ -1,4 +1,4 @@
-import { IUserType } from "./sorting.types";
+import { IUserType } from "./interfaces";
 
 const sortUsers = (sortType: string, userList: IUserType[]): IUserType[] => {
   switch (sortType) {

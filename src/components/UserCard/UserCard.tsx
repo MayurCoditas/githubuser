@@ -1,12 +1,16 @@
-import "./UserCard.scss";
+import "components/UserCard/UserCard.scss";
 import React, { Fragment, useState } from "react";
-import Repo from "../Repo/Repo";
+import Repo from "components/Repo/Repo";
 import { useEffect } from "react";
-import Spinner from "../Spinner/Spinner";
-import Button from "../Button/Button";
-import { IUserCardProps, IUserDataType, IRepoType } from "./Usercard.types";
-import { getUserInfo } from "../../services/users";
-import { getRepoInfo } from "../../services/repo";
+import Spinner from "components/Spinner/Spinner";
+import Button from "components/Button/Button";
+import {
+  IUserCardProps,
+  IUserDataType,
+  IRepoType,
+} from "components/UserCard/interfaces";
+import { getUserInfo } from "services/user/users";
+import { getRepoInfo } from "services/repo/repo";
 
 const UserCard: React.FC<IUserCardProps> = ({ user }) => {
   const [userData, setUserData] = useState<IUserDataType | null>(null);
@@ -14,27 +18,29 @@ const UserCard: React.FC<IUserCardProps> = ({ user }) => {
   const [flag, setFlag] = useState<boolean>(false);
 
   useEffect(() => {
-    getUserInfo(user.login, handleUserData);
+    const fetchUser: () => void = async () => {
+      const data: IUserDataType | null = await getUserInfo(user.login);
+      setUserData(data);
+    };
+    fetchUser();
   }, [user.login]);
 
   const handleClick: React.MouseEventHandler = async (
     event: React.MouseEvent
   ) => {
     event.preventDefault();
-    if (!flag) getRepoInfo(user.repos_url, handleRepos);
+    const fetchRepoInfo: () => void = async () => {
+      const data: IRepoType[] | null = await getRepoInfo(user.repos_url);
+      setRepos(data);
+    };
+    if (!flag) {
+      fetchRepoInfo();
+    }
     setFlag(!flag);
   };
 
-  const handleUserData = (user: IUserDataType) => {
-    setUserData(user);
-  };
-
-  const handleRepos = (repo: IRepoType[]) => {
-    setRepos(repo);
-  };
-
   return (
-    <Fragment>
+    <>
       <div className="userCard-container">
         <div className="image-container">
           <img src={user.avatar_url} alt={user.login} />
@@ -48,7 +54,9 @@ const UserCard: React.FC<IUserCardProps> = ({ user }) => {
               <p>Followers : {userData.followers}</p>
               <p>Following : {userData.following}</p>
             </div>
-          ) : null}
+          ) : (
+            <></>
+          )}
 
           {flag ? (
             <div className="collapse-container">
@@ -71,12 +79,12 @@ const UserCard: React.FC<IUserCardProps> = ({ user }) => {
           ) : null}
         </div>
         <div className="button-container">
-          <Button handleClick={handleClick} buttonType="">
+          <Button handleClick={handleClick}>
             {flag ? "Collapse" : "Details"}
           </Button>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

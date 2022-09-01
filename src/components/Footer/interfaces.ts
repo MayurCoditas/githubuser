@@ -7,7 +7,3 @@ export interface ICalculatePageNumbersArgs {
   newCurrentPage: number;
   pageCount: number;
 }
-
-export interface ICalculatePageNumbers {
-  calculatePagenumbers: Array<string | number>;
-}

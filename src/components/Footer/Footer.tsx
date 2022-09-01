@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import "./Footer.scss";
-import { IFooterProps } from "./Footer.types";
-import { calculatePagenumbers } from "./Footer.utils";
+import "components/Footer/Footer.scss";
+import { IFooterProps } from "components/Footer/interfaces";
+import { calculatePagenumbers } from "components/Footer/utils";
 
 const Footer: React.FC<IFooterProps> = ({
   currentPage,
