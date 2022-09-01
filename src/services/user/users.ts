@@ -12,7 +12,7 @@ export const searchUsers = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return { items: [], total_count: 0 };
   }
 };
@@ -26,7 +26,7 @@ export const getUserInfo = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };
