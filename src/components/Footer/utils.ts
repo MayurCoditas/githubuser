@@ -1,4 +1,4 @@
-import { ICalculatePageNumbersArgs } from "./Footer.types";
+import { ICalculatePageNumbersArgs } from "./interfaces";
 
 export const calculatePagenumbers = ({
   newCurrentPage,

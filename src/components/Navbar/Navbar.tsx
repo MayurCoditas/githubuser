@@ -1,24 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import Button from "../Button/Button";
-import "./Navbar.scss";
-import { INavProps } from "./Navbar.types";
+import Button from "components/Button/Button";
+import "components/Navbar/Navbar.scss";
+import { INavProps } from "components/Navbar/interfaces";
 
 const Navbar: React.FC<INavProps> = ({
   handleSearchString,
   handleSortValue,
 }) => {
-  const [searchStr, setSearchStr] = useState<string>("");
+  const [searchStr, setSearchStr] = useState("");
 
   const handleSearchClick: React.MouseEventHandler = (
     event: React.MouseEvent
   ) => {
     handleSearchString(searchStr);
   };
+
   const handleChange: React.ChangeEventHandler = (event: React.ChangeEvent) => {
     const target = event.target as HTMLSelectElement;
     handleSortValue(target.value);
   };
+
   const handleSearchChange: React.ChangeEventHandler = (
     event: React.ChangeEvent
   ) => {

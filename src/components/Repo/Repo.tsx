@@ -1,6 +1,6 @@
 import React from "react";
-import "./Repo.scss";
-import { IRepoProps } from "./Repo.types";
+import "components/Repo/Repo.scss";
+import { IRepoProps } from "components/Repo/interfaces";
 
 const Repo: React.FC<IRepoProps> = ({ repo }) => {
   return (
