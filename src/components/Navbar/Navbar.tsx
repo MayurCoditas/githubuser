@@ -30,8 +30,8 @@ const Navbar: React.FC<INavProps> = ({
     <div className="nav-container">
       <div className="nav-filter-container">
         <select className="nav-filter" id="sort" onChange={handleChange}>
-          <option value="A-Z">Name A-Z</option>
-          <option value="Z-A">Name Z-A</option>
+          <option value="A-Z">Sort By Name A-Z</option>
+          <option value="Z-A">Sort By Name Z-A</option>
         </select>
       </div>
       <div className="nav-search-container">

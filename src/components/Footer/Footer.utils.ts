@@ -4,7 +4,7 @@ export const calculatePagenumbers = ({
   newCurrentPage,
   pageCount,
 }: ICalculatePageNumbersArgs): Array<number | string> => {
-  let pages = [];
+  let pages: Array<number | string> = [];
   if (newCurrentPage <= 2) {
     pages = [1, 2, 3, "....", pageCount];
   } else if (newCurrentPage >= pageCount - 2) {
